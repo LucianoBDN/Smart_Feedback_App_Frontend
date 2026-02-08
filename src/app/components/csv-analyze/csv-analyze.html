@@ -1,0 +1,27 @@
+<h2>Análisis de CSV</h2>
+
+<input type="file" accept=".csv" (change)="onFileSelected($event)" />
+<button (click)="analyze()" [disabled]="loading()">Analizar</button>
+
+@if (loading()) {
+  <p>Procesando archivo...</p>
+}
+
+@if (results().length > 0) {
+  <div class="cards">
+    @for (item of results(); track item.id) {
+      <div class="card">
+        <p><strong>ID:</strong> {{ item.id }}</p>
+        <p>{{ item.message }}</p>
+        <p><strong>Sentiment:</strong> {{ item.sentiment }}</p>
+        <p><strong>Score:</strong> {{ item.score | number:'1.2-2' }}</p>
+      </div>
+    }
+  </div>
+
+  <div class="pagination">
+    <button (click)="prevPage()" [disabled]="page() === 1">Anterior</button>
+    <span>Página {{ page() }} de {{ totalPages() }}</span>
+    <button (click)="nextPage()" [disabled]="page() === totalPages()">Siguiente</button>
+  </div>
+}

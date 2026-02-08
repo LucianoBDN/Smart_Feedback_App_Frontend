@@ -1,0 +1,33 @@
+<h2>Análisis de Sentimiento</h2>
+
+<input
+  placeholder="Ingresá un texto para analizar"
+  [value]="text()"
+  (input)="text.set($any($event.target).value)"/>
+
+
+
+
+<br />
+
+<button (click)="analyze()" [disabled]="loading()">
+  Analizar
+</button>
+
+@if (loading()) {
+  <p>Analizando...</p>
+}
+
+@if (error()) {
+  <p style="color: red;">
+    {{ error() }}
+  </p>
+}
+
+@if (result()) {
+  <div>
+    <h3>Resultado</h3>
+    <p><strong>Sentimiento:</strong> {{ result()!.sentiment }}</p>
+    <p><strong>Score:</strong> {{ result()!.score | number:'1.2-2' }}</p>
+  </div>
+}
